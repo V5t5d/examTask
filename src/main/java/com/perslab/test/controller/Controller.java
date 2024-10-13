@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -16,9 +18,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 public class Controller {
-
-    @Autowired
-    HmacService service;
 
     @PostMapping("/{operationId}")
     public ResponseEntity<Map<String, Object>> handleOperation(
@@ -35,8 +34,16 @@ public class Controller {
 
         log.debug("params from request : {}", sortedParams);
 
-        String signature = "signature_value";
-//        String signature = service.generateHMACSignature(sortedParams);
+        String signature = null;
+        try {
+            signature = HmacService.generateHMACSignature(sortedParams);
+        } catch (NoSuchAlgorithmException e) {
+            log.error("NoSuchAlgorithmException in service.generateHMACSignature");
+            throw new RuntimeException(e);
+        } catch (InvalidKeyException e) {
+            log.error("InvalidKeyException service.generateHMACSignature");
+            throw new RuntimeException(e);
+        }
 
         log.debug("generated signature : {}", signature);
 
@@ -44,13 +51,13 @@ public class Controller {
 
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("status", "success");
-        responseData.put("result",resultList);
+        responseData.put("result", resultList);
 
         return ResponseEntity.ok(responseData);
     }
 
     @GetMapping
-    String ping () {
+    String ping() {
         return "pong";
     }
 }
