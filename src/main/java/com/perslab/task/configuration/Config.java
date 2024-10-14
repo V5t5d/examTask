@@ -1,6 +1,6 @@
-package com.perslab.test.configuration;
+package com.perslab.task.configuration;
 
-import com.perslab.test.security.TokenVerificationFilter;
+import com.perslab.task.security.TokenVerificationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

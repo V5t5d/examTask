@@ -1,4 +1,4 @@
-package com.perslab.test.security;
+package com.perslab.task.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//@Component
+@Component
 public class TokenVerificationFilter extends OncePerRequestFilter {
 
     @Value("${app.security.token}")
