@@ -12,22 +12,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-//@ContextConfiguration
-
 @SpringBootTest(classes = TaskApplication.class)
 @AutoConfigureMockMvc
 public class ControllerTests {
-
 
     @Autowired
     private MockMvc mockMvc;
 
     private final String VALID_TOKEN = "token-value";
-    private final String WRONG_TOKEN = "wrong-token";
     private final String OPERATION_ID = "123";
     private final String REQUEST_BODY = "{\"name1\":\"value1\",\"name2\":\"value2\"}";
-    private final String CORRECT_BASE64_HASH = "vCpg9Q/zCe0WDDHWlkSg127xtq7woP8Z5X8uBnsMhyo=";
-
 
     @Test
     public void tokenIsValid_ReturnsOk() throws Exception {
